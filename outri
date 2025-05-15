@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selamat Ulang Tahun</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #fff, #ffe0eb);
+    }
+
+    canvas#heartsCanvas,
+    canvas#confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease-in-out;
+      background: linear-gradient(to bottom, #fff, #ffe0eb);
+      z-index: 1;
+    }
+
+    .visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.8em;
+      color: #d63384;
+      margin-bottom: 20px;
+    }
+
+    .heart-button {
+      font-size: 3em;
+      color: #ff4d6d;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: transform 0.3s ease;
+    }
+
+    .heart-button:hover { transform: scale(1.2); }
+
+    .couple-photo {
+      border-radius: 20px;
+      width: 230px;
+      height: 230px;
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin: 20px 0;
+    }
+
+    p {
+      font-size: 1.1em;
+      color: #555;
+      margin: 5px 0;
+    }
+
+    .poem {
+      margin-top: 40px;
+      font-style: italic;
+      font-size: 1.2em;
+      color: #880e4f;
+      line-height: 1.7;
+      padding: 0 20px;
+    }
+
+    .nav-button {
+      margin-top: 40px;
+      background-color: #ffb6c1;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 12px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .nav-button:hover {
+      background-color: #ff6f91;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover { transform: scale(1.1); }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    #birthdayWish {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.8em;
+      color: #ff4d6d;
+      z-index: 9999;
+      opacity: 0;
+      animation: fadeIn 3s ease forwards 1s;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Musik Autoplay -->
+  <audio autoplay loop hidden>
+    <source src="musik.mp3" type="audio/mpeg">
+    Browser kamu tidak support audio :(
+  </audio>
+
+  <!-- Efek Partikel Cinta + Confetti -->
+  <canvas id="heartsCanvas"></canvas>
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Halaman 1 -->
+  <div id="page1" class="page visible">
+    <h1>Happy Birthdayy Adeee!! 🎂👑</h1>
+    <img src="putri.jpg" alt="Foto Riddho dan Hasanah" class="couple-photo">
+    <button class="heart-button" onclick="goToPage('page2')">♥</button>
+    <p>“Selamat ulang tahun, sayangku. Semoga hari ini dan setiap hari dipenuhi kebahagiaan, cinta, dan mimpi-mimpi yang jadi nyata. <br>
+      Aku bersyukur punyaa kamu di hidupkuuu. I love youu foreverr" 💖🎂✨
+      ”</p>
+    <p>— 16 May 2025 —</p>
+  </div>
+
+  <!-- Halaman 2 (Puisi) -->
+  <div id="page2" class="page">
+    <h1>Untuk Kamu</h1>
+    <div class="poem">
+      Kau sudah kuat, melewati gelombang dan badai, <br>
+Melangkah tegar walau dunia kadang berat. <br>
+Aku bangga padamu, yang tak pernah menyerah, <br>
+Meski lelah datang, kau terus bertahan. <br>
+Ingatlah, Anah, kau manusia yang berperasaan, <br>
+Tak apa untuk lelah, untuk menangis, untuk resah. <br>
+Di sini aku, jadi pendengar setiamu, <br>
+Pendukung nomor satu yang takkan pernah pergi. <br>
+Ingatlah, Anah, kau manusia yang berperasaan, <br>
+Tak apa untuk lelah, untuk menangis, untuk resah. <br>
+Di sini aku, jadi pendengar setiamu, <br>
+Pendukung nomor satu yang takkan pernah pergi.<br>
+    </div>
+    <button class="nav-button" onclick="goToPage('page3')">Lihat Kenangan Kita</button>
+  </div>
+
+  <!-- Halaman 3 (Galeri Foto) -->
+  <div id="page3" class="page">
+    <h1>Kenangan Manis</h1>
+    <div class="gallery">
+      <img src="g.jpg" alt="Kenangan 1">
+      <img src="n.jpg" alt="Kenangan 2">
+      <img src="p.jpg" alt="Kenangan 3">
+      <img src="u.jpg" alt="Kenangan 4">
+      <img src="a.jpg" alt="Kenangan 5">
+    </div>
+    <button class="nav-button" onclick="goToPage('page1')">Balik ke Awal</button>
+  </div>
+
+  <script>
+    function goToPage(targetId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('visible'));
+      setTimeout(() => {
+        document.getElementById(targetId).classList.add('visible');
+      }, 300);
+    }
+
+    // Efek Partikel Cinta
+    const heartCanvas = document.getElementById("heartsCanvas");
+    const heartCtx = heartCanvas.getContext("2d");
+    let hw = heartCanvas.width = window.innerWidth;
+    let hh = heartCanvas.height = window.innerHeight;
+
+    const hearts = Array.from({ length: 30 }, () => ({
+      x: Math.random() * hw,
+      y: Math.random() * hh,
+      size: Math.random() * 20 + 10,
+      speed: Math.random() * 1 + 0.5,
+      alpha: Math.random() * 0.5 + 0.5
+    }));
+
+    function drawHeart(x, y, size, alpha) {
+      heartCtx.save();
+      heartCtx.translate(x, y);
+      heartCtx.scale(size / 50, size / 50);
+      heartCtx.beginPath();
+      heartCtx.moveTo(0, 30);
+      heartCtx.bezierCurveTo(0, 0, -25, 0, -25, 15);
+      heartCtx.bezierCurveTo(-25, 35, 0, 45, 0, 60);
+      heartCtx.bezierCurveTo(0, 45, 25, 35, 25, 15);
+      heartCtx.bezierCurveTo(25, 0, 0, 0, 0, 30);
+      heartCtx.closePath();
+      heartCtx.fillStyle = `rgba(255, 105, 180, ${alpha})`;
+      heartCtx.fill();
+      heartCtx.restore();
+    }
+
+    function animateHearts() {
+      heartCtx.clearRect(0, 0, hw, hh);
+      for (let h of hearts) {
+        h.y += h.speed;
+        if (h.y > hh + 60) {
+          h.y = -60;
+          h.x = Math.random() * hw;
+        }
+        drawHeart(h.x, h.y, h.size, h.alpha);
+      }
+      requestAnimationFrame(animateHearts);
+    }
+
+    animateHearts();
+    window.addEventListener("resize", () => {
+      hw = heartCanvas.width = window.innerWidth;
+      hh = heartCanvas.height = window.innerHeight;
+    });
+
+    // Confetti Ultah
+    const confettiCanvas = document.getElementById("confettiCanvas");
+    const confettiCtx = confettiCanvas.getContext("2d");
+    let cw = confettiCanvas.width = window.innerWidth;
+    let ch = confettiCanvas.height = window.innerHeight;
+
+    const confetti = Array.from({length: 100}, () => ({
+      x: Math.random() * cw,
+      y: Math.random() * ch - ch,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 20 + 10,
+      color: `hsl(${Math.random()*360}, 100%, 70%)`,
+      tilt: Math.random() * 10 - 10,
+      tiltAngle: 0,
+      tiltAngleIncrement: Math.random() * 0.07 + 0.05
+    }));
+
+    function drawConfetti() {
+      confettiCtx.clearRect(0, 0, cw, ch);
+      confetti.forEach(c => {
+        confettiCtx.beginPath();
+        confettiCtx.lineWidth = c.r / 2;
+        confettiCtx.strokeStyle = c.color;
+        confettiCtx.moveTo(c.x + c.tilt + c.r / 2, c.y);
+        confettiCtx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 2);
+        confettiCtx.stroke();
+      });
+      updateConfetti();
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function updateConfetti() {
+      confetti.forEach(c => {
+        c.y += Math.cos(c.d) + 1 + c.r / 2;
+        c.tiltAngle += c.tiltAngleIncrement;
+        c.tilt = Math.sin(c.tiltAngle) * 15;
+        if (c.y > ch) {
+          c.x = Math.random() * cw;
+          c.y = -20;
+        }
+      });
+    }
+
+    drawConfetti();
+    window.addEventListener("resize", () => {
+      cw = confettiCanvas.width = window.innerWidth;
+      ch = confettiCanvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
